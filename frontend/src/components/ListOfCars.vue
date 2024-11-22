@@ -30,12 +30,8 @@
           </q-card-section>
 
           <div class="button-container">
-            <q-btn color="primary" label="Editar" @click="editCar(item._id)" />
-            <q-btn
-              color="negative"
-              label="Eliminar"
-              @click="deleteCar(item._id)"
-            />
+            <EditCarButton :item="item" />
+            <DeleteCarButton :item="item" />
           </div>
         </q-card>
       </q-expansion-item>
@@ -46,6 +42,8 @@
 <script setup>
 import CarStatusLabel from "src/components/CarStatusLabel.vue";
 import moment from "moment";
+import EditCarButton from "./EditCarButton.vue";
+import DeleteCarButton from "./DeleteCarButton.vue";
 
 const props = defineProps({
   data: {

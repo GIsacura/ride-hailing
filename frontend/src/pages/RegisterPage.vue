@@ -124,10 +124,10 @@ const onSubmit = async () => {
     router.push("/main/dashboard");
   } catch (error) {
     $q.notify({
-      color: "red-5",
+      type: "negative",
       textColor: "white",
-      icon: "warning",
       message: error.response.data,
+      position: "top",
     });
   }
 };

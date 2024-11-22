@@ -1,9 +1,5 @@
 <template lang="">
-  <q-btn
-    color="primary"
-    label="Crear nuevo carro"
-    @click="createNewCar = true"
-  />
+  <q-btn color="primary" label="Añadir auto" @click="createNewCar = true" />
   <q-dialog v-model="createNewCar" persistent="">
     <q-card style="min-width: 350px">
       <q-card-section>
@@ -47,7 +43,7 @@
             :options="[
               { label: 'Disponible', value: 'available' },
               { label: 'En servicio', value: 'in-service' },
-              { label: 'En mantenimiento', value: 'maintenance' },
+              { label: 'En mantenimiento', value: 'in-maintenance' },
             ]"
             :rules="[
               (val) =>
@@ -94,12 +90,14 @@ const onSubmit = async () => {
       type: "positive",
       textColor: "white",
       message: "Auto agregado exitosamente",
+      position: "top",
     });
   } catch (error) {
     $q.notify({
       type: "negative",
       textColor: "white",
       message: error.message,
+      position: "top",
     });
   }
 };

@@ -45,6 +45,25 @@ export const useCarListStore = defineStore("carList", () => {
     }
   };
 
+  const updateCar = async (carId, carData) => {
+    try {
+      const response = await CarService.updateCarInfo(carId, carData);
+      const index = cars.value.findIndex((car) => car._id === carId);
+      cars.value[index] = response.data.car;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const deleteCar = async (carId) => {
+    try {
+      await CarService.deleteCar(carId);
+      cars.value = cars.value.filter((car) => car._id !== carId);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
   const changePage = (page) => {
     currentPage.value = page;
   };
@@ -57,6 +76,8 @@ export const useCarListStore = defineStore("carList", () => {
     error,
     fetchCars,
     addCar,
+    updateCar,
+    deleteCar,
     changePage,
   };
 });

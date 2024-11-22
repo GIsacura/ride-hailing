@@ -20,7 +20,13 @@ export default class CarService {
   }
 
   static async updateCarInfo(carId, carData) {
-    return await HttpService.put(`/cars/${carId}`, carData, {
+    return await HttpService.patch(`/cars/${carId}`, carData, {
+      Authorization: `Bearer ${token}`,
+    });
+  }
+
+  static async deleteCar(carId) {
+    return await HttpService.delete(`/cars/${carId}`, {
       Authorization: `Bearer ${token}`,
     });
   }
