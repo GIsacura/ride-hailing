@@ -13,7 +13,6 @@ export class AuthController {
 	static async login(req, res) {
 		try {
 			const user = await AuthService.login(req.body);
-			console.log({ user, res });
 
 			return res.status(200).json(user);
 		} catch (error) {

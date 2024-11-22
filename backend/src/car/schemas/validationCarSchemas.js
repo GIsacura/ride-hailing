@@ -10,6 +10,6 @@ export const validationCreateCarSchema = Joi.object({
 });
 
 export const validationUpdateCarSchema = Joi.object({
-	status: Joi.string().valid("available", "in maintenance", "in service"),
+	status: Joi.string().valid("available", "in-maintenance", "in-service"),
 	updatedBy: Joi.string(),
 });

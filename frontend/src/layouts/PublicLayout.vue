@@ -15,6 +15,15 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+if (sessionStorage.getItem('token')) {
+  router.push('/main/dashboard');
+} else {
+  router.push('/login');
+}
 
 defineOptions({
   name: 'PublicLayout'

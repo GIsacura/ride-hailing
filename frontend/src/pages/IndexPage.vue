@@ -9,18 +9,10 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
 
-const router = useRouter();
 defineOptions({
   name: 'IndexPage'
 });
-
-if (localStorage.getItem('token')) {
-  router.push('/dashboard');
-} else {
-  router.push('/login');
-}
 
 
 </script>
