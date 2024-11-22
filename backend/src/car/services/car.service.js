@@ -11,33 +11,53 @@ export default class CarService {
 	static async getAllCars(queryParams) {
 		return await carSchema.aggregate([
 			{
-				$lookup: {
-					from: "users",
-					localField: "createdBy",
-					foreignField: "_id",
-					pipeline: [
+				$facet: {
+					data: [
 						{
-							$project: {
-								password: 0,
+							$lookup: {
+								from: "users",
+								localField: "createdBy",
+								foreignField: "_id",
+								pipeline: [
+									{
+										$project: {
+											password: 0,
+										},
+									},
+								],
+								as: "createdBy",
 							},
 						},
+						{
+							$lookup: {
+								from: "users",
+								localField: "updatedBy",
+								foreignField: "_id",
+								as: "updatedBy",
+							},
+						},
+						{
+							$sort: { createdAt: -1 },
+						},
+						{
+							$skip: parseInt(queryParams.offset) || 0,
+						},
+						{
+							$limit: parseInt(queryParams.limit) || 10,
+						},
 					],
-					as: "createdBy",
+					totalCount: [
+						{
+							$count: "count",
+						},
+					],
 				},
 			},
 			{
-				$lookup: {
-					from: "users",
-					localField: "updatedBy",
-					foreignField: "_id",
-					as: "updatedBy",
+				$project: {
+					data: 1,
+					totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
 				},
-			},
-			{
-				$skip: parseInt(queryParams.offset) || 0,
-			},
-			{
-				$limit: parseInt(queryParams.limit) || 10,
 			},
 		]);
 	}
@@ -85,5 +105,9 @@ export default class CarService {
 		}
 
 		return await carSchema.findByIdAndUpdate(id, carInfo, { new: true });
+	}
+
+	static async deleteCar(id) {
+		return await carSchema.findByIdAndDelete(id);
 	}
 }

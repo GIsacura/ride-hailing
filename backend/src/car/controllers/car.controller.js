@@ -65,4 +65,23 @@ export default class CarController {
 			res.status(500).json({ error: error.message });
 		}
 	}
+
+	static async deleteCar(req, res) {
+		if (!req.session.user) {
+			return res.status(401).json({ message: "Unauthenticated" });
+		}
+
+		if (req.session.user.role !== "admin") {
+			return res
+				.status(403)
+				.json({ message: "Unauthorized: you have to be admin" });
+		}
+
+		try {
+			const response = await CarService.deleteCar(req.params.id);
+			return res.status(204).json(response);
+		} catch (error) {
+			res.status(500).json({ error: error.message });
+		}
+	}
 }

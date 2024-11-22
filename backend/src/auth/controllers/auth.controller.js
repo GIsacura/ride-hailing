@@ -19,4 +19,15 @@ export class AuthController {
 			return res.status(500).json(error.message);
 		}
 	}
+
+	static async isValidToken(req, res) {
+		try {
+			const isValid = await AuthService.isValidToken(
+				req.headers.authorization.split(" ")[1]
+			);
+			return res.status(200).json(isValid);
+		} catch (error) {
+			return res.status(500).json(error.message);
+		}
+	}
 }

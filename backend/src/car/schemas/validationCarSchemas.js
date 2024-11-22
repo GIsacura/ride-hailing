@@ -5,7 +5,7 @@ export const validationCreateCarSchema = Joi.object({
 	model: Joi.string().required(),
 	year: Joi.string().required(),
 	status: Joi.string()
-		.valid("available", "in maintenance", "in service")
+		.valid("available", "in-maintenance", "in-service")
 		.required(),
 });
 

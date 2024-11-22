@@ -36,6 +36,8 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { onMounted } from "vue";
+import UserService from "src/services/user.service";
 
 const router = useRouter();
 const userInfo = JSON.parse(sessionStorage.getItem("user"));
@@ -53,4 +55,12 @@ const logout = () => {
   sessionStorage.removeItem("user");
   router.push("/login");
 };
+
+onMounted(async () => {
+  const response = await UserService.isValidToken();
+
+  if (!response) {
+    logout();
+  }
+});
 </script>

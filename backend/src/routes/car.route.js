@@ -20,6 +20,6 @@ router.patch(
 	validatorSchema(validationUpdateCarSchema, "body"),
 	CarController.updateCar
 );
-// router.delete("/:id", CarController.deleteCar);
+router.delete("/:id", CarController.deleteCar);
 
 export default router;

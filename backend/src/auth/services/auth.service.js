@@ -74,4 +74,22 @@ export class AuthService {
 			throw new Error(error.message);
 		}
 	}
+
+	static async isValidToken(token) {
+		if (!jwtSecret) {
+			throw new Error("JWT_SECRET not found");
+		}
+
+		try {
+			const data = jwt.verify(token, jwtSecret);
+			if (!data) {
+				return false;
+			}
+			return true;
+		} catch (error) {
+			console.log({ error });
+
+			return false;
+		}
+	}
 }

@@ -11,5 +11,6 @@ router.post(
 	AuthController.register
 );
 router.post("/login", AuthController.login);
+router.get("/isValidToken", AuthController.isValidToken);
 
 export default router;
