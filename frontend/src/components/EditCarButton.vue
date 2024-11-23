@@ -1,7 +1,12 @@
 <template lang="">
-  <q-btn color="primary" label="Editar" @click="isEditing = true" />
+  <q-btn
+    color="primary"
+    class="button"
+    label="Editar"
+    @click="isEditing = true"
+  />
   <q-dialog v-model="isEditing" persistent="">
-    <q-card style="min-width: 350px">
+    <q-card style="max-width: 350px; width: 100%">
       <q-card-section>
         <h5 style="margin: 0">Editar auto</h5>
       </q-card-section>
@@ -122,4 +127,10 @@ const onSubmit = async () => {
   }
 };
 </script>
-<style lang=""></style>
+<style>
+.button {
+  width: 100%;
+  min-width: 100px;
+  max-width: 300px;
+}
+</style>

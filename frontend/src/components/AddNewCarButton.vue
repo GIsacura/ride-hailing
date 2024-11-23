@@ -1,7 +1,7 @@
 <template lang="">
   <q-btn color="primary" label="Añadir auto" @click="createNewCar = true" />
   <q-dialog v-model="createNewCar" persistent="">
-    <q-card style="min-width: 350px">
+    <q-card style="max-width: 350px; width: 100%">
       <q-card-section>
         <h5 style="margin: 0">Crear nuevo carro</h5>
       </q-card-section>
@@ -102,4 +102,4 @@ const onSubmit = async () => {
   }
 };
 </script>
-<style lang=""></style>
+<style></style>

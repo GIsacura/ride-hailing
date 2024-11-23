@@ -4,7 +4,13 @@
       <q-toolbar>
         <q-toolbar-title> Ride hailing services </q-toolbar-title>
 
-        <q-btn color="primary" :label="userInfo.name" elevated="false">
+        <q-btn
+          flat
+          color="primary"
+          text-color="white"
+          :label="userInfo.name"
+          elevated="false"
+        >
           <q-menu>
             <q-list>
               <q-item clickable v-ripple>
@@ -19,8 +25,8 @@
                     style="text-transform: capitalize"
                   >
                     Cerrar sesión
-                  </q-btn></q-item-section
-                >
+                  </q-btn>
+                </q-item-section>
               </q-item>
             </q-list>
           </q-menu>

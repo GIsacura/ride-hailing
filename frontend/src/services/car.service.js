@@ -4,11 +4,11 @@ const token = sessionStorage.getItem("token");
 
 export default class CarService {
   static async getAllCars(queryParams) {
-    const { limit, offset } = queryParams;
+    // const { limit, offset } = queryParams;
 
-    const query = `?limit=${limit}&offset=${offset}`;
+    // const query = `?limit=${limit}&offset=${offset}`;
 
-    return await HttpService.get(`/cars${query}`, {
+    return await HttpService.get(`/cars`, {
       Authorization: `Bearer ${token}`,
     });
   }

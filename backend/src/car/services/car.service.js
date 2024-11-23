@@ -9,57 +9,107 @@ export default class CarService {
 	}
 
 	static async getAllCars(queryParams) {
-		return await carSchema.aggregate([
-			{
-				$facet: {
-					data: [
-						{
-							$lookup: {
-								from: "users",
-								localField: "createdBy",
-								foreignField: "_id",
-								pipeline: [
-									{
-										$project: {
-											password: 0,
+		let pipeline;
+		if (!queryParams.limit || !queryParams.offset) {
+			pipeline = [
+				{
+					$facet: {
+						data: [
+							{
+								$lookup: {
+									from: "users",
+									localField: "createdBy",
+									foreignField: "_id",
+									pipeline: [
+										{
+											$project: {
+												password: 0,
+											},
 										},
-									},
-								],
-								as: "createdBy",
+									],
+									as: "createdBy",
+								},
 							},
-						},
-						{
-							$lookup: {
-								from: "users",
-								localField: "updatedBy",
-								foreignField: "_id",
-								as: "updatedBy",
+							{
+								$lookup: {
+									from: "users",
+									localField: "updatedBy",
+									foreignField: "_id",
+									as: "updatedBy",
+								},
 							},
-						},
-						{
-							$sort: { createdAt: -1 },
-						},
-						{
-							$skip: parseInt(queryParams.offset) || 0,
-						},
-						{
-							$limit: parseInt(queryParams.limit) || 10,
-						},
-					],
-					totalCount: [
-						{
-							$count: "count",
-						},
-					],
+							{
+								$sort: { createdAt: -1 },
+							},
+						],
+						totalCount: [
+							{
+								$count: "count",
+							},
+						],
+					},
 				},
-			},
-			{
-				$project: {
-					data: 1,
-					totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
+				{
+					$project: {
+						data: 1,
+						totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
+					},
 				},
-			},
-		]);
+			];
+		} else {
+			pipeline = [
+				{
+					$facet: {
+						data: [
+							{
+								$lookup: {
+									from: "users",
+									localField: "createdBy",
+									foreignField: "_id",
+									pipeline: [
+										{
+											$project: {
+												password: 0,
+											},
+										},
+									],
+									as: "createdBy",
+								},
+							},
+							{
+								$lookup: {
+									from: "users",
+									localField: "updatedBy",
+									foreignField: "_id",
+									as: "updatedBy",
+								},
+							},
+							{
+								$sort: { createdAt: -1 },
+							},
+							{
+								$skip: parseInt(queryParams.offset),
+							},
+							{
+								$limit: parseInt(queryParams.limit),
+							},
+						],
+						totalCount: [
+							{
+								$count: "count",
+							},
+						],
+					},
+				},
+				{
+					$project: {
+						data: 1,
+						totalCount: { $arrayElemAt: ["$totalCount.count", 0] },
+					},
+				},
+			];
+		}
+		return await carSchema.aggregate(pipeline);
 	}
 
 	static async getCarById(id) {
@@ -104,7 +154,8 @@ export default class CarService {
 			throw new Error("Car not found");
 		}
 
-		return await carSchema.findByIdAndUpdate(id, carInfo, { new: true });
+		await carSchema.findByIdAndUpdate(id, carInfo, { new: true });
+		return await this.getCarById(id);
 	}
 
 	static async deleteCar(id) {

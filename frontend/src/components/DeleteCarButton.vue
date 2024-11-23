@@ -1,7 +1,12 @@
 <template lang="">
-  <q-btn color="negative" label="Eliminar" @click="isDeleting = true" />
+  <q-btn
+    class="button"
+    color="negative"
+    label="Eliminar"
+    @click="isDeleting = true"
+  />
   <q-dialog v-model="isDeleting" persistent="">
-    <q-card style="min-width: 350px">
+    <q-card style="max-width: 350px; width: 100%">
       <q-card-section>
         <h5 style="margin: 0">Eliminar auto</h5>
       </q-card-section>
@@ -64,4 +69,10 @@ const deleteCar = async () => {
   }
 };
 </script>
-<style lang=""></style>
+<style>
+.button {
+  width: 100%;
+  min-width: 100px;
+  max-width: 300px;
+}
+</style>

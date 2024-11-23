@@ -1,6 +1,7 @@
+import moment from "moment";
 import { defineStore } from "pinia";
 import CarService from "src/services/car.service";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useCarListStore = defineStore("carList", () => {
   const cars = ref([]);
@@ -8,11 +9,29 @@ export const useCarListStore = defineStore("carList", () => {
   const loading = ref(false);
   const error = ref(null);
   const currentPage = ref(1);
+  const filterProperty = ref({ label: "Marca", value: "brand" });
+  const filterValue = ref("");
+  const filteredCars = computed(() =>
+    cars.value.filter((car) => {
+      if (filterProperty.value && filterValue.value) {
+        if (typeof car[filterProperty.value.value] === "date") {
+          return (
+            moment(car[filterProperty.value.value]).format("YYYY-MM-DD") ===
+            filterValue.value
+          );
+        }
+        return car[filterProperty.value.value]
+          .toLowerCase()
+          .includes(filterValue.value.toLowerCase());
+      }
+      return true;
+    })
+  );
 
-  const fetchCars = async ({ limit, offset }) => {
+  const fetchCars = async () => {
     loading.value = true;
     try {
-      const res = await CarService.getAllCars({ limit, offset });
+      const res = await CarService.getAllCars();
       cars.value = res.cars[0].data;
       totalCars.value = res.cars[0].totalCount;
     } catch (err) {
@@ -32,7 +51,7 @@ export const useCarListStore = defineStore("carList", () => {
       });
 
       if (currentPage.value !== 1) {
-        fetchCars({ limit: 10, offset: 0 });
+        fetchCars();
         changePage(1);
         return;
       }
@@ -64,12 +83,21 @@ export const useCarListStore = defineStore("carList", () => {
     }
   };
 
+  const setFilterProperty = (property) => {
+    filterProperty.value = property;
+  };
+
+  const setFilterValue = (value) => {
+    filterValue.value = value;
+  };
+
   const changePage = (page) => {
     currentPage.value = page;
   };
 
   return {
     cars,
+    filteredCars,
     totalCars,
     currentPage,
     loading,
@@ -79,5 +107,9 @@ export const useCarListStore = defineStore("carList", () => {
     updateCar,
     deleteCar,
     changePage,
+    filterProperty,
+    filterValue,
+    setFilterProperty,
+    setFilterValue,
   };
 });
