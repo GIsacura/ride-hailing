@@ -31,7 +31,7 @@
         transition-show="scale"
         transition-hide="scale"
       >
-        <q-date v-model="proxyDate">
+        <q-date v-model="proxyDate" range>
           <div class="row items-center justify-end q-gutter-sm">
             <q-btn label="Cancel" color="primary" flat v-close-popup />
             <q-btn
@@ -50,12 +50,18 @@
 <script setup>
 import moment from "moment";
 import { useCarListStore } from "src/stores/car-list-store";
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 const carListStore = useCarListStore();
-const date = ref(moment(new Date()).format("YYYY-MM-DD"));
-const proxyDate = ref(moment(new Date()).format("YYYY-MM-DD"));
+const date = ref({
+  from: moment(new Date()).subtract(5, "days").format("YYYY/MM/DD"),
+  to: moment(new Date()).format("YYYY/MM/DD"),
+});
+const proxyDate = ref({
+  from: moment(new Date()).subtract(5, "days").format("YYYY/MM/DD"),
+  to: moment(new Date()).format("YYYY/MM/DD"),
+});
 
-const filteredCars = computed(() => carListStore.filteredCars);
+const filterProperty = computed(() => carListStore.filterProperty);
 
 const updateProxy = () => {
   proxyDate.value = date.value;
@@ -65,10 +71,8 @@ const save = () => {
   carListStore.filterValue = proxyDate.value;
 };
 
-console.log({
-  date: date.value,
-  proxyDate: proxyDate.value,
-  filteredCars: filteredCars.value,
+watch(filterProperty, () => {
+  carListStore.filterValue = "";
 });
 
 const showInput = computed(() => {

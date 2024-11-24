@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Ride hailing services </q-toolbar-title>
+        <q-toolbar-title> Web administrativa </q-toolbar-title>
 
         <q-btn
           flat

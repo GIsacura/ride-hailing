@@ -7,7 +7,26 @@
         <ListFilter />
         <AddNewCarButton />
       </div>
-      <ListOfCars :data="cars" />
+      <ListOfCars v-if="cars.length > 0" />
+
+      <div v-else>
+        <q-card flat class="q-pa-md">
+          <q-card-section>
+            <q-item>
+              <q-item-section>
+                <q-item-label>
+                  <h4 style="margin: 0; margin-bottom: 10px">
+                    No hay autos registrados
+                  </h4>
+                  <p style="font-size: 20px">
+                    Comienza a agregar autos para visualizar la lista
+                  </p>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-card-section>
+        </q-card>
+      </div>
 
       <!-- <div class="q-pa-lg flex flex-center">
         <q-pagination
@@ -32,7 +51,7 @@ defineOptions({
   name: "DashboardPage",
 });
 
-const current = ref(1);
+// const current = ref(1);
 
 const carListStore = useCarListStore();
 onMounted(() => {

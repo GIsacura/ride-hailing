@@ -20,6 +20,7 @@
             style="margin-bottom: 10px"
             :rules="[
               (val) => (val && val.length > 0) || 'Este campo es requerido',
+              (val) => (val && /^[A-Za-z]+$/.test(val)) || 'Solo letras',
             ]"
           />
           <q-input
@@ -29,6 +30,8 @@
             style="margin-bottom: 10px"
             :rules="[
               (val) => (val && val.length > 0) || 'Este campo es requerido',
+              (val) =>
+                (val && /^[A-Za-z0-9 ]+$/.test(val)) || 'Solo letras y números',
             ]"
           />
           <q-input
@@ -38,6 +41,7 @@
             style="margin-bottom: 10px"
             :rules="[
               (val) => (val && val.length > 0) || 'Este campo es requerido',
+              (val) => (val && /^[0-9]+$/.test(val)) || 'Solo números',
             ]"
           />
           <q-select

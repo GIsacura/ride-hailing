@@ -14,10 +14,12 @@ export const useCarListStore = defineStore("carList", () => {
   const filteredCars = computed(() =>
     cars.value.filter((car) => {
       if (filterProperty.value && filterValue.value) {
-        if (typeof car[filterProperty.value.value] === "date") {
+        if (["createdAt", "updatedAt"].includes(filterProperty.value.value)) {
           return (
-            moment(car[filterProperty.value.value]).format("YYYY-MM-DD") ===
-            filterValue.value
+            moment(car[filterProperty.value.value]).format("YYYY/MM/DD") >=
+              filterValue.value.from &&
+            moment(car[filterProperty.value.value]).format("YYYY/MM/DD") <=
+              filterValue.value.to
           );
         }
         return car[filterProperty.value.value]
