@@ -1,54 +1,61 @@
 <template>
   <q-page class="flex flex-center column">
-    <h3>Iniciar sesión</h3>
+    <div v-if="!loading" class="flex flex-center column" style="width: 100%">
+      <h3>Iniciar sesión</h3>
 
-    <q-form @submit="onSubmit" class="form">
-      <q-input
-        class="input"
-        v-model="email"
-        label="Correo"
-        type="text"
-        name="email"
-        outlined
-        :rules="[
-          (val) => (val && val.length > 0) || 'Este campo es requerido',
-          (val) =>
-            (val && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)) ||
-            'Debe ser un correo valido',
-        ]"
-      />
-      <q-input
-        class="input"
-        v-model="password"
-        style="width: 100%"
-        :type="viewPassword ? 'text' : 'password'"
-        name="password"
-        label="Contraseña"
-        outlined
-        :rules="[(val) => (val && val.length > 0) || 'Este campo es requerido']"
-      >
-        <template v-slot:append>
-          <q-icon
-            name="visibility"
-            style="cursor: pointer; width: 20px"
-            @click="togglePassword"
-          />
-        </template>
-      </q-input>
-      <q-btn
-        class="input"
-        type="submit"
-        label="Iniciar sesión"
-        color="primary"
-      />
-    </q-form>
+      <q-form @submit="onSubmit" class="form">
+        <q-input
+          class="input"
+          v-model="email"
+          label="Correo"
+          type="text"
+          name="email"
+          outlined
+          :rules="[
+            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) =>
+              (val && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)) ||
+              'Debe ser un correo valido',
+          ]"
+        />
+        <q-input
+          class="input"
+          v-model="password"
+          style="width: 100%"
+          :type="viewPassword ? 'text' : 'password'"
+          name="password"
+          label="Contraseña"
+          outlined
+          :rules="[
+            (val) => (val && val.length > 0) || 'Este campo es requerido',
+          ]"
+        >
+          <template v-slot:append>
+            <q-icon
+              name="visibility"
+              style="cursor: pointer; width: 20px"
+              @click="togglePassword"
+            />
+          </template>
+        </q-input>
+        <q-btn
+          class="input"
+          type="submit"
+          label="Iniciar sesión"
+          color="primary"
+        />
+      </q-form>
 
-    <p>
-      ¿No tienes cuenta?.
-      <span class="register-link" @click="router.push('/register')"
-        >Regístrate</span
-      >
-    </p>
+      <p>
+        ¿No tienes cuenta?.
+        <span class="register-link" @click="router.push('/register')"
+          >Regístrate</span
+        >
+      </p>
+    </div>
+    <div v-else>
+      <q-spinner color="primary" size="3em" />
+    </div>
   </q-page>
 </template>
 
@@ -63,9 +70,11 @@ const $q = useQuasar();
 
 const email = ref(null);
 const password = ref(null);
+const loading = ref(false);
 
 const onSubmit = async () => {
   try {
+    loading.value = true;
     const response = await UserService.login({
       email: email.value,
       password: password.value,
@@ -80,9 +89,11 @@ const onSubmit = async () => {
       })
     );
     sessionStorage.setItem("token", response.data.jwt);
+    loading.value = false;
 
     router.push("/main/dashboard");
   } catch (error) {
+    loading.value = false;
     console.log({ error });
 
     $q.notify({

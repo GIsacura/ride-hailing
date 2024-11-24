@@ -5,7 +5,10 @@
         <CarStatusLabel :status="props.row.status" />
       </td>
     </template>
-    <template v-slot:body-cell-actions="props">
+    <template
+      v-if="userInfo && userInfo.role === 'admin'"
+      v-slot:body-cell-actions="props"
+    >
       <td align="center">
         <q-btn flat icon="las la-ellipsis-v">
           <q-menu
@@ -31,6 +34,7 @@ import { computed } from "vue";
 const carListStore = useCarListStore();
 const filteredCars = computed(() => carListStore.filteredCars);
 const loadingData = computed(() => carListStore.loading);
+const userInfo = JSON.parse(sessionStorage.getItem("user"));
 
 const columns = [
   {
@@ -97,14 +101,17 @@ const columns = [
     field: (row) => row.updatedBy[0]?.name,
     sortable: true,
   },
-  {
+];
+
+if (userInfo && userInfo.role === "admin") {
+  columns.push({
     name: "actions",
     required: true,
     label: "Acciones",
     align: "center",
     field: (row) => row._id,
-  },
-];
+  });
+}
 </script>
 
 <style>

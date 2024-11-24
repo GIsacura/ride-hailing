@@ -19,8 +19,6 @@ const router = useRouter();
 
 if (sessionStorage.getItem("token")) {
   router.push("/main/dashboard");
-} else {
-  router.push("/login");
 }
 
 defineOptions({

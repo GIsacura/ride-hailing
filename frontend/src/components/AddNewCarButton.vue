@@ -1,5 +1,6 @@
 <template lang="">
   <q-btn
+    v-if="userInfo && userInfo.role === 'admin'"
     class="button"
     color="primary"
     label="Añadir auto"
@@ -85,6 +86,7 @@ const year = ref("");
 const status = ref({ label: "Disponible", value: "available" });
 
 const carListStore = useCarListStore();
+const userInfo = JSON.parse(sessionStorage.getItem("user"));
 
 const onSubmit = async () => {
   try {

@@ -6,6 +6,12 @@ export default class CarController {
 			return res.status(401).json({ message: "Unauthorized" });
 		}
 
+		if (req.session.user.role !== "admin") {
+			return res
+				.status(403)
+				.json({ message: "Unauthorized: you have to be admin" });
+		}
+
 		try {
 			const car = await CarService.addCar({
 				...req.body,
@@ -46,7 +52,7 @@ export default class CarController {
 
 	static async updateCar(req, res) {
 		if (!req.session.user) {
-			return res.status(401).json({ message: "Unauthenticated" });
+			return res.status(401).json({ message: "Unauthorized" });
 		}
 
 		if (req.session.user.role !== "admin") {
