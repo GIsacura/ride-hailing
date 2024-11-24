@@ -1,33 +1,23 @@
 <template>
-  <transition
-    appear
-    enter-active-class="animated fadeIn"
-    leave-active-class="animated fadeOut"
-  >
-    <q-table flat bordered :columns="columns" :rows="filteredCars">
-      <template v-slot:body-cell-status="props">
-        <td align="center">
-          <CarStatusLabel :status="props.row.status" />
-        </td>
-      </template>
-      <template v-slot:body-cell-actions="props">
-        <td align="center">
-          <q-btn flat icon="las la-ellipsis-v">
-            <q-menu
-              style="width: max-content; display: flex; flex-direction: column"
-            >
-              <EditCarButton :item="props.row" />
-              <DeleteCarButton :item="props.row" />
-            </q-menu>
-          </q-btn>
-        </td>
-      </template>
-    </q-table>
-  </transition>
-
-  <q-inner-loading :showing="loadingData">
-    <q-spinner-gears size="50px" color="primary" />
-  </q-inner-loading>
+  <q-table flat bordered :columns="columns" :rows="filteredCars">
+    <template v-slot:body-cell-status="props">
+      <td align="center">
+        <CarStatusLabel :status="props.row.status" />
+      </td>
+    </template>
+    <template v-slot:body-cell-actions="props">
+      <td align="center">
+        <q-btn flat icon="las la-ellipsis-v">
+          <q-menu
+            style="width: max-content; display: flex; flex-direction: column"
+          >
+            <EditCarButton :item="props.row" />
+            <DeleteCarButton :item="props.row" />
+          </q-menu>
+        </q-btn>
+      </td>
+    </template>
+  </q-table>
 </template>
 
 <script setup>
