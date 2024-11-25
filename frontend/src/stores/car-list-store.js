@@ -11,6 +11,7 @@ export const useCarListStore = defineStore("carList", () => {
   const currentPage = ref(1);
   const filterProperty = ref({ label: "Marca", value: "brand" });
   const filterValue = ref("");
+  const userInfo = JSON.parse(sessionStorage.getItem("user"));
   const filteredCars = computed(() =>
     cars.value.filter((car) => {
       if (filterProperty.value && filterValue.value) {
@@ -21,6 +22,11 @@ export const useCarListStore = defineStore("carList", () => {
             moment(car[filterProperty.value.value]).format("YYYY/MM/DD") <=
               filterValue.value.to
           );
+        }
+        if (["createdBy", "updatedBy"].includes(filterProperty.value.value)) {
+          return car[filterProperty.value.value][0].name
+            .toLowerCase()
+            .includes(filterValue.value.toLowerCase());
         }
         return car[filterProperty.value.value]
           .toLowerCase()
@@ -52,13 +58,10 @@ export const useCarListStore = defineStore("carList", () => {
         year: carData.year,
       });
 
-      if (currentPage.value !== 1) {
-        fetchCars();
-        changePage(1);
-        return;
-      }
+      response.data.car.createdBy = [{ name: userInfo.name }];
+      response.data.car.updatedBy = [{ name: userInfo.name }];
 
-      cars.value.pop();
+      console.log({ car: response.data.car });
 
       cars.value = [response.data.car, ...cars.value];
     } catch (error) {

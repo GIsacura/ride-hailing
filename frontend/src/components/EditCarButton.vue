@@ -14,6 +14,7 @@
       <q-card-section>
         <q-form @submit="onSubmit">
           <q-input
+            readonly
             v-model="brand"
             label="Marca"
             outlined
@@ -24,6 +25,7 @@
             ]"
           />
           <q-input
+            readonly
             v-model="model"
             label="Modelo"
             outlined
@@ -35,6 +37,7 @@
             ]"
           />
           <q-input
+            readonly
             v-model="year"
             label="Año"
             outlined

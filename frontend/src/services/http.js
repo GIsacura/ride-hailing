@@ -15,7 +15,6 @@ class Http {
   static getInstance() {
     if (!this.instance) {
       this.instance = new Http();
-      console.log({ API_URL });
     }
     return this.instance;
   }
