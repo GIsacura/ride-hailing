@@ -1,6 +1,5 @@
 import axios from "axios";
-// import { API_URL } from "src/environment";
-const API_URL = process.env;
+import { API_URL } from "src/environment";
 
 class Http {
   constructor() {
