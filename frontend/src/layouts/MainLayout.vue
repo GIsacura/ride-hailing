@@ -4,6 +4,8 @@
       <q-toolbar>
         <q-toolbar-title> Web administrativa </q-toolbar-title>
 
+        <LanguageSwitcher />
+
         <q-btn
           flat
           color="primary"
@@ -44,6 +46,7 @@
 import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import UserService from "src/services/user.service";
+import LanguageSwitcher from "src/components/LanguageSwitcher.vue";
 
 const router = useRouter();
 const userInfo = JSON.parse(sessionStorage.getItem("user"));

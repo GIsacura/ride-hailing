@@ -1,21 +1,21 @@
 <template>
   <q-page class="flex flex-center column">
     <div v-if="!loading" class="flex flex-center column" style="width: 100%">
-      <h3>Iniciar sesión</h3>
+      <h3>{{ t("login.title") }}</h3>
 
       <q-form @submit="onSubmit" class="form">
         <q-input
           class="input"
           v-model="email"
-          label="Correo"
+          :label="t('login.email')"
           type="text"
           name="email"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('login.validation.required'),
             (val) =>
               (val && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)) ||
-              'Debe ser un correo valido',
+              t('login.validation.email'),
           ]"
         />
         <q-input
@@ -24,10 +24,10 @@
           style="width: 100%"
           :type="viewPassword ? 'text' : 'password'"
           name="password"
-          label="Contraseña"
+          :label="t('login.password')"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('login.validation.required'),
           ]"
         >
           <template v-slot:append>
@@ -41,16 +41,16 @@
         <q-btn
           class="input"
           type="submit"
-          label="Iniciar sesión"
+          :label="t('login.button')"
           color="primary"
         />
       </q-form>
 
       <p>
-        ¿No tienes cuenta?.
-        <span class="register-link" @click="router.push('/register')"
-          >Regístrate</span
-        >
+        {{ t("login.withoutAccount") }}.
+        <span class="register-link" @click="router.push('/register')">{{
+          t("login.signIn")
+        }}</span>
       </p>
     </div>
     <div v-else>
@@ -61,9 +61,12 @@
 
 <script setup>
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import UserService from "src/services/user.service";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const router = useRouter();
 const $q = useQuasar();

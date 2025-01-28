@@ -7,6 +7,7 @@
 
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
+const path = require("path");
 
 const { configure } = require("quasar/wrappers");
 
@@ -18,7 +19,7 @@ module.exports = configure(function (/* ctx */) {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ["axios"],
+    boot: ["axios", "i18n"],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
     css: ["app.scss"],
@@ -75,6 +76,24 @@ module.exports = configure(function (/* ctx */) {
           { server: false },
         ],
       ],
+
+      chainWebpack: (chain) => {
+        chain.module
+          .rule("i18n-resource")
+          .test(/\.(json5?|ya?ml)$/)
+          .include.add(path.resolve(__dirname, "./src/i18n"))
+          .end()
+          .type("javascript/auto")
+          .use("i18n-resource")
+          .loader("@intlify/vue-i18n-loader");
+
+        chain.module
+          .rule("i18n")
+          .resourceQuery(/blockType=i18n/)
+          .type("javascript/auto")
+          .use("i18n")
+          .loader("@intlify/vue-i18n-loader");
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

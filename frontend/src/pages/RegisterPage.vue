@@ -1,32 +1,32 @@
 <template>
   <q-page class="flex flex-center column">
     <div v-if="!loading" class="flex flex-center column" style="width: 100%">
-      <h3>Registro</h3>
+      <h3>{{ t("signIn.title") }}</h3>
 
       <q-form @submit="onSubmit" class="form">
         <q-input
           class="input"
           v-model="name"
-          label="Nombre"
+          :label="t('signIn.name')"
           type="text"
           name="name"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('signIn.validation.required'),
           ]"
         />
         <q-input
           class="input"
           v-model="email"
-          label="Correo"
+          :label="t('signIn.email')"
           type="text"
           name="email"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('signIn.validation.required'),
             (val) =>
               (val && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val)) ||
-              'Debe ser un correo valido',
+              t('login.validation.email'),
           ]"
         />
         <q-input
@@ -35,10 +35,10 @@
           style="width: 100%"
           :type="viewPassword ? 'text' : 'password'"
           name="password"
-          label="Contraseña"
+          :label="t('signIn.password')"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('signIn.validation.required'),
           ]"
         >
           <template v-slot:append>
@@ -55,12 +55,13 @@
           style="width: 100%"
           :type="viewConfirmPassword ? 'text' : 'password'"
           name="password"
-          label="Confirmar contraseña"
+          :label="t('signIn.confirmPassword')"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('signIn.validation.required'),
             (val) =>
-              (val && val === password) || 'Las contraseñas deben coincidir',
+              (val && val === password) ||
+              t('login.validation.confirmPassword'),
           ]"
         >
           <template v-slot:append>
@@ -75,20 +76,25 @@
           class="input"
           v-model="role"
           :options="roleOptions"
-          label="Rol"
+          :label="t('signIn.role')"
           outlined
           :rules="[
-            (val) => (val && val.length > 0) || 'Este campo es requerido',
+            (val) => (val && val.length > 0) || t('signIn.validation.required'),
           ]"
         />
-        <q-btn class="input" type="submit" label="Registrar" color="primary" />
+        <q-btn
+          class="input"
+          type="submit"
+          :label="t('signIn.button')"
+          color="primary"
+        />
       </q-form>
 
       <p>
-        ¿Ya tienes cuenta?.
-        <span class="login-link" @click="router.push('/login')"
-          >Inicia sesión</span
-        >
+        {{ t("signIn.haveAccount") }}.
+        <span class="login-link" @click="router.push('/login')">{{
+          t("signIn.login")
+        }}</span>
       </p>
     </div>
 
@@ -103,6 +109,9 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import UserService from "src/services/user.service";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const router = useRouter();
 const $q = useQuasar();

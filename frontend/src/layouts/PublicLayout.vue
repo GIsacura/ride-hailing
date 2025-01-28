@@ -2,7 +2,8 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Web administrativa </q-toolbar-title>
+        <q-toolbar-title> {{ $t("publicHeader.title") }} </q-toolbar-title>
+        <LanguageSwitcher />
       </q-toolbar>
     </q-header>
 
@@ -14,6 +15,10 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import LanguageSwitcher from "../components/LanguageSwitcher.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const router = useRouter();
 
