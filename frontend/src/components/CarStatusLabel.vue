@@ -1,9 +1,12 @@
 <template>
   <span :class="[statusInfo[props.status].style]">{{
-    statusInfo[props.status].name
+    t(statusInfo[props.status].name)
   }}</span>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
   status: {
     type: String,
@@ -11,9 +14,12 @@ const props = defineProps({
   },
 });
 const statusInfo = {
-  available: { name: "Disponible", style: "available" },
-  "in-service": { name: "En servicio", style: "in-service" },
-  "in-maintenance": { name: "En mantenimiento", style: "in-maintenance" },
+  available: { name: "carStatusLabel.available", style: "available" },
+  "in-service": { name: "carStatusLabel.inService", style: "in-service" },
+  "in-maintenance": {
+    name: "carStatusLabel.inMaintenance",
+    style: "in-maintenance",
+  },
 };
 
 defineOptions({

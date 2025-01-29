@@ -2,7 +2,7 @@
   <q-page
     style="width: 90%; margin: 0 auto; min-height: 100vh; padding-bottom: 20px"
   >
-    <h2>Dashboard</h2>
+    <h2>{{ t("dashboard.title") }}</h2>
 
     <div>
       <div class="filter-container">
@@ -21,7 +21,7 @@
                   <h4
                     style="margin: 0; margin-bottom: 10px; text-align: center"
                   >
-                    No hay autos registrados
+                    {{ t("dashboard.emptyState.text1") }}
                   </h4>
                   <p
                     style="
@@ -30,7 +30,7 @@
                       line-height: normal;
                     "
                   >
-                    Comienza a agregar autos para visualizar la lista
+                    {{ t("dashboard.emptyState.text2") }}
                   </p>
                   <div
                     class="flex"
@@ -54,6 +54,9 @@ import AddNewCarButton from "src/components/AddNewCarButton.vue";
 import { onMounted, computed, ref, watch } from "vue";
 import { useCarListStore } from "src/stores/car-list-store";
 import ListFilter from "src/components/ListFilter.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 defineOptions({
   name: "DashboardPage",

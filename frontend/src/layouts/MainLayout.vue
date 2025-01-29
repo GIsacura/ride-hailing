@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-toolbar-title> Web administrativa </q-toolbar-title>
+        <q-toolbar-title> {{ t("privateHeader.title") }} </q-toolbar-title>
 
         <LanguageSwitcher />
 
@@ -26,7 +26,7 @@
                     @click="logout"
                     style="text-transform: capitalize"
                   >
-                    Cerrar sesión
+                    {{ t("privateHeader.logout") }}
                   </q-btn>
                 </q-item-section>
               </q-item>
@@ -47,6 +47,9 @@ import { useRouter } from "vue-router";
 import { onMounted } from "vue";
 import UserService from "src/services/user.service";
 import LanguageSwitcher from "src/components/LanguageSwitcher.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const router = useRouter();
 const userInfo = JSON.parse(sessionStorage.getItem("user"));

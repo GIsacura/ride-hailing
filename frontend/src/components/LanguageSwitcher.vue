@@ -9,8 +9,7 @@
     emit-value
     map-options
     options-dense
-    style="min-width: 150px; border-color: #fff"
-    color="white"
+    style="min-width: 150px"
   />
   <!-- ...... -->
 </template>
@@ -25,10 +24,3 @@ const localeOptions = [
   { value: "es", label: "Español" },
 ];
 </script>
-
-<style>
-.select {
-  border-color: #fff;
-  color: #fff;
-}
-</style>

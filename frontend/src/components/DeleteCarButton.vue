@@ -2,25 +2,29 @@
   <q-btn
     class="button"
     color="negative"
-    label="Eliminar"
+    :label="t('deleteCarButton.buttonLabel')"
     @click="isDeleting = true"
   />
   <q-dialog v-model="isDeleting" persistent="">
     <q-card style="max-width: 350px; width: 100%">
       <q-card-section>
-        <h5 style="margin: 0">Eliminar auto</h5>
+        <h5 style="margin: 0">{{ t("deleteCarButton.title") }}</h5>
       </q-card-section>
 
       <q-card-section>
         <p style="text-align: center">
-          ¿Estás seguro de que deseas eliminar este auto?
+          {{ t("deleteCarButton.text") }}
         </p>
       </q-card-section>
       <q-card-actions align="right" class="text-primary">
-        <q-btn color="primary" label="Cancelar" v-close-popup />
+        <q-btn
+          color="primary"
+          :label="t('deleteCarButton.cancel')"
+          v-close-popup
+        />
         <q-btn
           color="negative"
-          label="Eliminar"
+          :label="t('deleteCarButton.delete')"
           @click="deleteCar"
           v-close-popup
         />
@@ -32,6 +36,9 @@
 import { ref } from "vue";
 import { useQuasar } from "quasar";
 import { useCarListStore } from "src/stores/car-list-store";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const $q = useQuasar();
 
@@ -56,7 +63,7 @@ const deleteCar = async () => {
     $q.notify({
       type: "positive",
       textColor: "white",
-      message: "Auto eliminado exitosamente",
+      message: t("deleteCarButton.successMessage"),
       position: "top",
     });
   } catch (error) {

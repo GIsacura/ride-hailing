@@ -1,5 +1,6 @@
 export default {
   publicHeader: { title: "Web Admin" },
+  privateHeader: { title: "Web Admin", logout: "Logout" },
   login: {
     title: "Login",
     email: "Email",
@@ -29,13 +30,91 @@ export default {
     },
   },
   dashboard: {
-    title: "Dashboard",
-    filter: {
-      select: {
-        label: "",
-      },
-      input: "",
+    title: "Welcome",
+
+    emptyState: {
+      text1: "No cars registered",
+      text2: "Start adding cars to view the list",
     },
-    addButton: "",
+  },
+  listFilter: {
+    select: {
+      label: "Filter by",
+    },
+    inputPlaceholder: "Value",
+  },
+  listOfCars: {
+    headers: {
+      brand: "Brand",
+      model: "Model",
+      year: "Year",
+      status: "Status",
+      createdAt: "Created at",
+      createdBy: "Created by",
+      updatedAt: "Updated at",
+      updatedBy: "Updated by",
+      actions: "Actions",
+    },
+
+    recordsPerPage: "Cars per page",
+  },
+  addNewCarButton: {
+    buttonLabel: "Add car",
+    title: "Add new car",
+    brand: "Brand",
+    model: "Model",
+    year: "Year",
+    status: "Status",
+    cancel: "Cancel",
+    add: "Add",
+    statusValues: {
+      available: "Available",
+      inService: "In service",
+      inMaintenance: "In maintenance",
+    },
+    validation: {
+      required: "This field is required",
+      brand: "Only letters",
+      model: "Only letters and/or numbers",
+      year: "Only numbers",
+    },
+    successMessage: "Car successfully added",
+    errorMessage: "",
+  },
+  editCarButton: {
+    buttonLabel: "Edit",
+    title: "Edit Car",
+    brand: "Brand",
+    model: "Model",
+    year: "Year",
+    status: "Status",
+    cancel: "Cancel",
+    save: "Save",
+    statusValues: {
+      available: "Available",
+      inService: "In service",
+      inMaintenance: "In maintenance",
+    },
+    validation: {
+      required: "This field is required",
+      brand: "Only letters",
+      model: "Only letters and/or numbers",
+      year: "Only numbers",
+    },
+    successMessage: "Car successfully updated",
+    errorMessage: "",
+  },
+  deleteCarButton: {
+    buttonLabel: "Delete",
+    title: "Delete Car",
+    text: "Are you sure you want to delete this car?",
+    cancel: "Cancel",
+    delete: "Delete",
+    successMessage: "Car successfully deleted",
+  },
+  carStatusLabel: {
+    available: "Available",
+    inService: "In service",
+    inMaintenance: "In maintenance",
   },
 };

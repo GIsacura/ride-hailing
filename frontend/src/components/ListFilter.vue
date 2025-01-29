@@ -3,7 +3,7 @@
     <q-select
       class="select-filter"
       outlined
-      label="Filtrar por"
+      :label="t('listFilter.select.label')"
       v-model="carListStore.filterProperty"
       :options="[
         { label: 'Marca', value: 'brand' },
@@ -16,7 +16,7 @@
       ]"
     />
     <q-input
-      label="Valor a filtrar"
+      :label="t('listFilter.inputPlaceholder')"
       v-if="showInput"
       v-model="carListStore.filterValue"
       outlined
@@ -51,6 +51,10 @@
 import moment from "moment";
 import { useCarListStore } from "src/stores/car-list-store";
 import { ref, computed, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 const carListStore = useCarListStore();
 const date = ref({
   from: moment(new Date()).subtract(5, "days").format("YYYY/MM/DD"),

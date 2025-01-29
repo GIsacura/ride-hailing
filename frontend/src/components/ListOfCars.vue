@@ -1,10 +1,30 @@
 <template>
-  <q-table flat bordered :columns="columns" :rows="filteredCars">
-    <template v-slot:body-cell-status="props">
-      <td align="center">
-        <CarStatusLabel :status="props.row.status" />
-      </td>
+  <q-table
+    flat
+    bordered
+    :columns="columns"
+    :rows="filteredCars"
+    :rows-per-page-label="t('listOfCars.recordsPerPage')"
+  >
+    <template v-slot:header="props">
+      <q-tr :props="props">
+        <q-th
+          v-for="col in props.cols"
+          :key="col.name"
+          :props="props"
+          class="text-center"
+        >
+          {{ t(col.label) }}
+        </q-th>
+      </q-tr>
     </template>
+
+    <template v-slot:body-cell-status="props">
+      <q-td align="center">
+        <CarStatusLabel :status="props.row.status" />
+      </q-td>
+    </template>
+
     <template
       v-if="userInfo && userInfo.role === 'admin'"
       v-slot:body-cell-actions="props"
@@ -29,7 +49,10 @@ import moment from "moment";
 import EditCarButton from "./EditCarButton.vue";
 import DeleteCarButton from "./DeleteCarButton.vue";
 import { useCarListStore } from "src/stores/car-list-store";
-import { computed } from "vue";
+import { computed, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 
 const carListStore = useCarListStore();
 const filteredCars = computed(() => carListStore.filteredCars);
@@ -40,7 +63,7 @@ const columns = [
   {
     name: "brand",
     required: true,
-    label: "Marca",
+    label: "listOfCars.headers.brand",
     align: "center",
     field: (row) => row.brand,
     sortable: true,
@@ -48,7 +71,7 @@ const columns = [
   {
     name: "model",
     required: true,
-    label: "Modelo",
+    label: "listOfCars.headers.model",
     align: "center",
     field: (row) => row.model,
     sortable: true,
@@ -56,7 +79,7 @@ const columns = [
   {
     name: "year",
     required: true,
-    label: "Año",
+    label: "listOfCars.headers.year",
     align: "center",
     field: (row) => row.year,
     sortable: true,
@@ -64,7 +87,7 @@ const columns = [
   {
     name: "status",
     required: true,
-    label: "Estado",
+    label: "listOfCars.headers.status",
     align: "center",
     field: (row) => row.status,
     sortable: true,
@@ -72,7 +95,7 @@ const columns = [
   {
     name: "createdAt",
     required: true,
-    label: "Fecha de creación",
+    label: "listOfCars.headers.createdAt",
     align: "center",
     field: (row) => moment(row.createdAt).format("DD-MM-YYYY"),
     sortable: true,
@@ -80,7 +103,7 @@ const columns = [
   {
     name: "createdBy",
     required: true,
-    label: "Creado por",
+    label: "listOfCars.headers.createdBy",
     align: "center",
     field: (row) => row.createdBy[0]?.name,
     sortable: true,
@@ -88,7 +111,7 @@ const columns = [
   {
     name: "updatedAt",
     required: true,
-    label: "Ultima actualización",
+    label: "listOfCars.headers.updatedAt",
     align: "center",
     field: (row) => moment(row.updatedAt).format("DD-MM-YYYY"),
     sortable: true,
@@ -96,18 +119,20 @@ const columns = [
   {
     name: "updatedBy",
     required: true,
-    label: "Actualizado por",
+    label: "listOfCars.headers.updatedBy",
     align: "center",
     field: (row) => row.updatedBy[0]?.name,
     sortable: true,
   },
 ];
 
+const computedColumns = computed(() => columns);
+
 if (userInfo && userInfo.role === "admin") {
   columns.push({
     name: "actions",
     required: true,
-    label: "Acciones",
+    label: "listOfCars.headers.actions",
     align: "center",
     field: (row) => row._id,
   });

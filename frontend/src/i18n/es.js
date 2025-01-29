@@ -1,5 +1,6 @@
 export default {
   publicHeader: { title: "Web Administrativa" },
+  privateHeader: { title: "Web Administrativa", logout: "Cerrar sesión" },
   login: {
     title: "Inicia sesión",
     email: "Correo",
@@ -27,5 +28,92 @@ export default {
       confirmPassword: "Passwords must match",
       required: "Este campo es obligatorio",
     },
+  },
+  dashboard: {
+    title: "Bienvenido",
+    emptyState: {
+      text1: "No hay autos registrados",
+      text2: "Comienza a agregar autos para visualizar la lista",
+    },
+  },
+  listFilter: {
+    select: {
+      label: "Filtrar por",
+    },
+    inputPlaceholder: "Valor",
+  },
+  listOfCars: {
+    headers: {
+      brand: "Marca",
+      model: "Modelo",
+      year: "Año",
+      status: "Estado",
+      createdAt: "Fecha de creación",
+      createdBy: "Creador por",
+      updatedAt: "Fecha de actualización",
+      updatedBy: "Actualizado por",
+      actions: "Acciones",
+    },
+
+    recordsPerPage: "Autos por página",
+  },
+  addNewCarButton: {
+    buttonLabel: "Añadir auto",
+    title: "Añadir nuevo auto",
+    brand: "Marca",
+    model: "Modelo",
+    year: "Year",
+    status: "Estado",
+    cancel: "Cancel",
+    add: "Añadir",
+    statusValues: {
+      available: "Disponible",
+      inService: "En servicio",
+      inMaintenance: "En mantenimiento",
+    },
+    validation: {
+      required: "Este campo es requerido",
+      brand: "Solo letras",
+      model: "Solo letras y/ó números",
+      year: "Solo números",
+    },
+    successMessage: "Auto agregado exitosamente",
+    errorMessage: "",
+  },
+  editCarButton: {
+    buttonLabel: "Editar",
+    title: "Editar Auto",
+    brand: "Marca",
+    model: "Modelo",
+    year: "Año",
+    status: "Estado",
+    cancel: "Cancelar",
+    save: "Guardar",
+    statusValues: {
+      available: "Disponible",
+      inService: "En servicio",
+      inMaintenance: "En mantenimiento",
+    },
+    validation: {
+      required: "Este campo es requerido",
+      brand: "Solo letras",
+      model: "Solo letras y/ó números",
+      year: "Solo números",
+    },
+    successMessage: "Auto actualizado exitosamente",
+    errorMessage: "",
+  },
+  deleteCarButton: {
+    buttonLabel: "Eliminar",
+    title: "Eliminar auto",
+    text: "¿Estás seguro de que deseas eliminar este auto?",
+    cancel: "Cancelar",
+    delete: "Eliminar",
+    successMessage: "Auto eliminado exitosamente",
+  },
+  carStatusLabel: {
+    available: "Disponible",
+    inService: "En servicio",
+    inMaintenance: "En mantenimiento",
   },
 };
